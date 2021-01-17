@@ -1,0 +1,24 @@
+settings:
+  legacy:
+    force: false
+    interval: 0s
+schema:
+  - name: syu-kan-backend
+    path: .
+    commands:
+      install:
+        status: true
+        method: go build -x -o /tmp/main main.go
+      run:
+        status: true
+        method: /tmp/main
+    watcher:
+      extensions:
+        - go
+      paths:
+        - /
+      ignore:
+        paths:
+          - .git
+          - .realize
+          - vendor
