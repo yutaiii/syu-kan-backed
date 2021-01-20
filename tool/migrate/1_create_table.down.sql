@@ -1,2 +1,2 @@
-DROP TABLE IF EXISTS
-progress, routines;
+DROP TABLE IF EXISTS progress,
+routines;
