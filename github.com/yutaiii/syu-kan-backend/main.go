@@ -1,10 +1,10 @@
 package main
 
 import (
-	"net/http"
-
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
+
+	"github.com/yutaiii/syu-kan-backend/handler"
 )
 
 func main() {
@@ -14,14 +14,8 @@ func main() {
 	e.Use(middleware.Recover())
 
 	//routing
-	e.GET("/", helloWorld())
+	e.GET("/", handler.HelloWorld())
 
 	//exec server
 	e.Start(":8000")
-}
-
-func helloWorld() echo.HandlerFunc {
-	return func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World")
-	}
 }
