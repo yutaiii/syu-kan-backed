@@ -14,7 +14,7 @@ func main() {
 	e.Use(middleware.Recover())
 
 	//routing
-	e.GET("/", handler.HelloWorld())
+	e.GET("/routines", handler.GetRoutines())
 
 	//exec server
 	e.Start(":8000")
