@@ -1,7 +1,6 @@
 package model
 
 import (
-	"reflect"
 	"time"
 
 	"github.com/yutaiii/syu-kan-backend/domain/entity"
@@ -13,7 +12,7 @@ type Routine struct {
 	StartedAt time.Time `json:"startedAt"`
 }
 
-func NewRoutine(entity entity.Routine) *Routine {
+func NewRoutine(entity *entity.Routine) *Routine {
 	return &Routine{
 		BaseModel: BaseModel{
 			ID:          entity.BaseEntity.ID,
@@ -26,12 +25,10 @@ func NewRoutine(entity entity.Routine) *Routine {
 	}
 }
 
-func NewRoutines(entities *[]entity.Routine) []*Routine {
+func NewRoutines(entities []*entity.Routine) []*Routine {
 	var models []*Routine
-	e := reflect.TypeOf(entities)
-	cnt := e.NumField()
-	for i := 0; i < cnt; i++ {
-		model := NewRoutine((*entities)[i])
+	for _, e := range entities {
+		model := NewRoutine(e)
 		models = append(models, model)
 	}
 	return models

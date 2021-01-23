@@ -10,8 +10,9 @@ func GetConn() *gorm.DB {
 	PASS := "root"
 	PROTOCOL := "tcp(syu-kan-db:3306)"
 	DBNAME := "syu_kan"
+	OPTIONS := "charset=utf8mb4&parseTime=True&loc=Local"
 
-	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "&parseTime=True&loc=Local"
+	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?" + OPTIONS
 	db, err := gorm.Open(mysql.Open(CONNECT), &gorm.Config{})
 
 	if err != nil {
