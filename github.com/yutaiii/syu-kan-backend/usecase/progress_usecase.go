@@ -10,6 +10,3 @@ func CreateProgress(models []*model.Progress) error {
 	db := util.GetConn()
 	return repository.CreateProgress(db, models)
 }
-
-// curl -X POST http://localhost:8000/progress -d 'routineId=1' 'date=2020/01/24' 'achieved=true'
-// curl -X POST -H "Content-Type: application/json" -d '{"routineId":1, "date":"2020/01/24, "achieved": true}' http://localhost:8000/progress
