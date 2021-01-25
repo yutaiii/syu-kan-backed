@@ -25,6 +25,7 @@ func main() {
 
 	//routing
 	e.GET("/routines", handler.GetRoutines())
+	e.POST("/progress", handler.CreateProgerss())
 
 	//exec server
 	e.Start(":8000")
