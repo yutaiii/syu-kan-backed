@@ -10,6 +10,10 @@ import (
 
 func CreateProgress(db *gorm.DB, models []*model.Progress) error {
 	entities := convertModelToEntity(models)
+	// 更新するものがない場合は処理を終了
+	if len(entities) < 1 {
+		return nil
+	}
 	return store.CreateProgress(db, entities)
 }
 
