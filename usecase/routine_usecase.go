@@ -21,11 +21,11 @@ func NewRoutineUsecase(ctx context.Context) *RoutineUsecase {
 	}
 }
 
-func GetAllRoutines() ([]*model.Routine, error) {
+func (u *RoutineUsecase) GetAllRoutines() ([]*model.Routine, error) {
 	db := util.GetConn()
-	routines, err := repository.GetAllRoutines(db)
+	routines, err := u.repository.GetAllRoutines(db)
 	if err != nil {
-		log.Printf("GetAllRoutines err: %+v", err)
+		log.Printf("RoutineUsecase, GetAllRoutines error: %+v", err)
 		return nil, err
 	}
 	return routines, nil
@@ -35,7 +35,7 @@ func (u *RoutineUsecase) CreateRoutines(models []*model.Routine) ([]*model.Routi
 	db := util.GetConn()
 	routines, err := u.repository.CreateRoutines(models, db)
 	if err != nil {
-		log.Printf("RoutineUsecase, CreateRoutines err: %+v", err)
+		log.Printf("RoutineUsecase, CreateRoutines error: %+v", err)
 		return nil, err
 	}
 	return routines, nil

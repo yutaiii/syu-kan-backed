@@ -12,8 +12,10 @@ import (
 
 func GetRoutines() echo.HandlerFunc {
 	return func(c echo.Context) error {
+		usecase := usecase.NewRoutineUsecase(context.Background())
 		routines, err := usecase.GetAllRoutines()
 		if err != nil {
+			log.Printf("RoutineAPI, GetAllRoutines error: %+v", err)
 			return c.JSON(http.StatusInternalServerError, "error")
 		}
 		return c.JSON(http.StatusOK, routines)

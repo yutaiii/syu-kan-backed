@@ -17,7 +17,7 @@ func NewRoutineStore(ctx context.Context) *RoutineStore {
 	}
 }
 
-func GetAll(db *gorm.DB) ([]*entity.Routine, error) {
+func (s *RoutineStore) GetAll(db *gorm.DB) ([]*entity.Routine, error) {
 	routines := make([]*entity.Routine, 0)
 	err := db.Find(&routines).Error
 	if err != nil {

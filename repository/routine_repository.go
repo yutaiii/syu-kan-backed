@@ -22,8 +22,8 @@ func NewRoutineRepository(ctx context.Context) *RoutineRepository {
 	}
 }
 
-func GetAllRoutines(db *gorm.DB) ([]*model.Routine, error) {
-	routines, err := store.GetAll(db)
+func (r *RoutineRepository) GetAllRoutines(db *gorm.DB) ([]*model.Routine, error) {
+	routines, err := r.store.GetAll(db)
 	if err != nil {
 		return nil, err
 	}
