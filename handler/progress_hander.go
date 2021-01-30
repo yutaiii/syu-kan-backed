@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"context"
 	"log"
 	"net/http"
 
@@ -18,6 +19,7 @@ func CreateProgerss() echo.HandlerFunc {
 			return c.JSON(http.StatusBadRequest, "Bad Request")
 		}
 
+		usecase := usecase.NewProgressUsecase(context.Background())
 		err = usecase.CreateProgress(*p)
 		if err != nil {
 			log.Printf("CreateProgerss err: %+v", err)

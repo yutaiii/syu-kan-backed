@@ -1,12 +1,26 @@
 package usecase
 
 import (
+	"context"
+
 	"github.com/yutaiii/syu-kan-backend/domain/model"
 	"github.com/yutaiii/syu-kan-backend/repository"
 	"github.com/yutaiii/syu-kan-backend/tool/util"
 )
 
-func CreateProgress(models []*model.Progress) error {
+type ProgressUsecase struct {
+	ctx        context.Context
+	repository *repository.ProgressRepository
+}
+
+func NewProgressUsecase(ctx context.Context) *ProgressUsecase {
+	return &ProgressUsecase{
+		ctx:        ctx,
+		repository: repository.NewProgressRepository(ctx),
+	}
+}
+
+func (u *ProgressUsecase) CreateProgress(models []*model.Progress) error {
 	db := util.GetConn()
-	return repository.CreateProgress(db, models)
+	return u.repository.CreateProgress(db, models)
 }
