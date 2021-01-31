@@ -42,7 +42,7 @@ func (r *RoutineRepository) CreateRoutines(models []*model.Routine, db *gorm.DB)
 }
 
 func (r *RoutineRepository) UpdateRoutines(db *gorm.DB, models []*model.Routine) ([]*model.Routine, error) {
-	entities := r.convertUpdateModelsToEntity(models)
+	entities := r.convertModelsToEntityWithID(models)
 	// create records if not exists
 	result, err := r.store.Upsert(db, entities)
 	if err != nil {
@@ -50,6 +50,11 @@ func (r *RoutineRepository) UpdateRoutines(db *gorm.DB, models []*model.Routine)
 	}
 	m := model.NewRoutines(result)
 	return m, nil
+}
+
+func (r *RoutineRepository) DeleteRoutines(db *gorm.DB, models []*model.Routine) error {
+	entities := r.convertModelsToEntityWithID(models)
+	return r.store.Delete(db, entities)
 }
 
 func (r *RoutineRepository) convertModelsToEntity(models []*model.Routine) []*entity.Routine {
@@ -68,7 +73,7 @@ func (r *RoutineRepository) convertModelToEntity(m *model.Routine) *entity.Routi
 	}
 }
 
-func (r *RoutineRepository) convertUpdateModelsToEntity(models []*model.Routine) []*entity.Routine {
+func (r *RoutineRepository) convertModelsToEntityWithID(models []*model.Routine) []*entity.Routine {
 	var entities []*entity.Routine
 	for _, m := range models {
 		e := r.convertUpdateModelToEntity(m)

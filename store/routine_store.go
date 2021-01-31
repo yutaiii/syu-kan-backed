@@ -45,3 +45,7 @@ func (s *RoutineStore) Upsert(db *gorm.DB, e []*entity.Routine) ([]*entity.Routi
 	}
 	return e, nil
 }
+
+func (s *RoutineStore) Delete(db *gorm.DB, e []*entity.Routine) error {
+	return db.Delete(&e).Error
+}

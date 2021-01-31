@@ -50,3 +50,13 @@ func (u *RoutineUsecase) UpdateRoutines(models []*model.Routine) ([]*model.Routi
 	}
 	return routines, nil
 }
+
+func (u *RoutineUsecase) DeleteRoutines(models []*model.Routine) error {
+	db := util.GetConn()
+	err := u.repository.DeleteRoutines(db, models)
+	if err != nil {
+		log.Printf("RoutineUsecase, DeleteRoutines error: %+v", err)
+		return err
+	}
+	return nil
+}

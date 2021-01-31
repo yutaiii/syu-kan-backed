@@ -59,3 +59,22 @@ func UpdateRoutines() echo.HandlerFunc {
 		return c.JSON(http.StatusOK, result)
 	}
 }
+
+func DeleteRoutines() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		usecase := usecase.NewRoutineUsecase(context.Background())
+		models := new([]*model.Routine)
+		err := c.Bind(models)
+		if err != nil {
+			log.Printf("RoutineAPI, DeleteRoutines,Bind error: %+v", err)
+			return c.JSON(http.StatusBadRequest, "Bad Request")
+		}
+
+		err = usecase.DeleteRoutines(*models)
+		if err != nil {
+			log.Printf("RoutineAPI, DeleteRoutines error: %+v", err)
+			return c.JSON(http.StatusInternalServerError, "Internal Server Error")
+		}
+		return c.JSON(http.StatusOK, "OK")
+	}
+}
