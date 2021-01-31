@@ -20,7 +20,7 @@ func main() {
 	// wth GET, PUT, POST or DELETE method.
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"http://localhost:8080"},
-		AllowMethods: []string{http.MethodGet, http.MethodPost, http.MethodPost, http.MethodDelete},
+		AllowMethods: []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete},
 	}))
 
 	//routing
