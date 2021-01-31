@@ -40,3 +40,22 @@ func CreateRoutines() echo.HandlerFunc {
 		return c.JSON(http.StatusOK, result)
 	}
 }
+
+func UpdateRoutines() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		usecase := usecase.NewRoutineUsecase(context.Background())
+		models := new([]*model.Routine)
+		err := c.Bind(models)
+		if err != nil {
+			log.Printf("RoutineAPI, UpdateRoutines,Bind error: %+v", err)
+			return c.JSON(http.StatusBadRequest, "Bad Request")
+		}
+
+		result, err := usecase.UpdateRoutines(*models)
+		if err != nil {
+			log.Printf("RoutineAPI, UpdateRoutines error: %+v", err)
+			return c.JSON(http.StatusInternalServerError, "Internal Server Error")
+		}
+		return c.JSON(http.StatusOK, result)
+	}
+}

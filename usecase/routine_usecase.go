@@ -40,3 +40,13 @@ func (u *RoutineUsecase) CreateRoutines(models []*model.Routine) ([]*model.Routi
 	}
 	return routines, nil
 }
+
+func (u *RoutineUsecase) UpdateRoutines(models []*model.Routine) ([]*model.Routine, error) {
+	db := util.GetConn()
+	routines, err := u.repository.UpdateRoutines(db, models)
+	if err != nil {
+		log.Printf("RoutineUsecase, UpdateRoutines error: %+v", err)
+		return nil, err
+	}
+	return routines, nil
+}

@@ -5,6 +5,7 @@ import (
 
 	"github.com/yutaiii/syu-kan-backend/domain/entity"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type RoutineStore struct {
@@ -28,6 +29,17 @@ func (s *RoutineStore) GetAll(db *gorm.DB) ([]*entity.Routine, error) {
 
 func (s *RoutineStore) CreateRoutines(e []*entity.Routine, db *gorm.DB) ([]*entity.Routine, error) {
 	err := db.Create(&e).Error
+	if err != nil {
+		return nil, err
+	}
+	return e, nil
+}
+
+func (s *RoutineStore) Upsert(db *gorm.DB, e []*entity.Routine) ([]*entity.Routine, error) {
+	err := db.Clauses(clause.OnConflict{
+		Columns:   []clause.Column{{Name: "id"}},
+		DoUpdates: clause.AssignmentColumns([]string{"name"}),
+	}).Create(&e).Error
 	if err != nil {
 		return nil, err
 	}
