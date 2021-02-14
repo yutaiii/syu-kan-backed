@@ -1,2 +1,3 @@
 DROP TABLE IF EXISTS progress,
-routines;
+routines,
+users;
