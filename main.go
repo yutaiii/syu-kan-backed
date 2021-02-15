@@ -29,6 +29,7 @@ func main() {
 	e.PUT("/routines/update", handler.UpdateRoutines())
 	e.POST("/routines/delete", handler.DeleteRoutines())
 	e.POST("/progress", handler.CreateProgerss())
+	e.POST("/user/create", handler.CreateUser())
 
 	//exec server
 	e.Start(":8000")
