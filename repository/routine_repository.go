@@ -69,6 +69,7 @@ func (r *RoutineRepository) convertModelsToEntity(models []*model.Routine) []*en
 func (r *RoutineRepository) convertModelToEntity(m *model.Routine) *entity.Routine {
 	return &entity.Routine{
 		Name:      m.Name,
+		UserID:    m.UserID,
 		StartedAt: m.StartedAt,
 	}
 }
@@ -88,6 +89,7 @@ func (r *RoutineRepository) convertUpdateModelToEntity(m *model.Routine) *entity
 			ID: m.ID,
 		},
 		Name:      m.Name,
+		UserID:    m.UserID,
 		StartedAt: m.StartedAt,
 	}
 }

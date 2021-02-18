@@ -9,6 +9,7 @@ import (
 type Routine struct {
 	BaseModel
 	Name      string    `json:"name"`
+	UserID    uint64    `json:"userId"`
 	StartedAt time.Time `json:"startedAt"`
 }
 
@@ -21,6 +22,7 @@ func NewRoutine(entity *entity.Routine) *Routine {
 			DeletededAt: entity.BaseEntity.DeletedAt,
 		},
 		Name:      entity.Name,
+		UserID:    entity.UserID,
 		StartedAt: entity.StartedAt,
 	}
 }
