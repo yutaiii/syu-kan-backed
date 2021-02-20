@@ -1,5 +1,5 @@
 INSERT INTO
-  users(name, fireabase_uid)
+  users(name, firebase_uid)
 VALUES
   ('test1', 'uid1'),
   ('test2', 'uid2'),
