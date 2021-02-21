@@ -26,9 +26,17 @@ func (r *UserRepository) CreateUser(db *gorm.DB, model *model.User) error {
 	return r.store.CreateUser(db, entity)
 }
 
+func (s *UserRepository) FindUserByFirebaseUID(db *gorm.DB, m *model.User) (*model.User, error) {
+	entity, err := s.store.FindUserByCondition(db, "firebase_uid", m.FirebaseUid)
+	if err != nil {
+		return nil, err
+	}
+	return model.NewUser(entity), nil
+}
+
 func (r *UserRepository) convertModelToEntity(m *model.User) *entity.User {
 	return &entity.User{
-		Name:         m.Name,
-		FireabaseUid: m.FireabaseUid,
+		Name:        m.Name,
+		FirebaseUid: m.FirebaseUid,
 	}
 }

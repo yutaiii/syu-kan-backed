@@ -28,3 +28,22 @@ func CreateUser() echo.HandlerFunc {
 		return c.JSON(http.StatusOK, "OK")
 	}
 }
+
+func FindUserByFirebaseUID() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		u := new(model.User)
+		err := c.Bind(u)
+		if err != nil {
+			log.Printf("FindUserByFirebaseUID, Bind err: %+v", err)
+			return c.JSON(http.StatusBadRequest, "Bad Request")
+		}
+
+		usecase := usecase.NewUserUsecase(context.Background())
+		res, err := usecase.FindUserByFirebaseUID(u)
+		if err != nil {
+			log.Printf("FindUserByFirebaseUID err: %+v", err)
+			return c.JSON(http.StatusInternalServerError, "Internal Server Error")
+		}
+		return c.JSON(http.StatusOK, res)
+	}
+}

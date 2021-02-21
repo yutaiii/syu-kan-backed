@@ -28,8 +28,11 @@ func main() {
 	e.POST("/routines/create", handler.CreateRoutines())
 	e.PUT("/routines/update", handler.UpdateRoutines())
 	e.POST("/routines/delete", handler.DeleteRoutines())
+
 	e.POST("/progress", handler.CreateProgerss())
+
 	e.POST("/user/create", handler.CreateUser())
+	e.POST("/users/find", handler.FindUserByFirebaseUID())
 
 	//exec server
 	e.Start(":8000")

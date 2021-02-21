@@ -24,3 +24,8 @@ func (u *UserUsecase) CreateUser(model *model.User) error {
 	db := util.GetConn()
 	return u.repository.CreateUser(db, model)
 }
+
+func (u *UserUsecase) FindUserByFirebaseUID(model *model.User) (*model.User, error) {
+	db := util.GetConn()
+	return u.repository.FindUserByFirebaseUID(db, model)
+}

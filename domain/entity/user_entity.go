@@ -2,6 +2,6 @@ package entity
 
 type User struct {
 	BaseEntity
-	Name         string
-	FireabaseUid string
+	Name        string
+	FirebaseUid string
 }
