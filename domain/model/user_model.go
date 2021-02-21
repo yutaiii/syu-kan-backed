@@ -2,21 +2,26 @@ package model
 
 import "github.com/yutaiii/syu-kan-backend/domain/entity"
 
-type User struct {
+type InputUser struct {
 	BaseModel
 	Name        string `json:"name"`
 	FirebaseUid string `json:"firebaseUid"`
 }
 
-func NewUser(entity *entity.User) *User {
-	return &User{
+type OutputUser struct {
+	BaseModel
+	Name        string `json:"name"`
+	FirebaseUid string `json:"-"`
+}
+
+func NewOutputUser(entity *entity.User) *OutputUser {
+	return &OutputUser{
 		BaseModel: BaseModel{
 			ID:          entity.BaseEntity.ID,
 			CreatedAt:   entity.BaseEntity.CreatedAt,
 			UpdatedAt:   entity.BaseEntity.UpdatedAt,
 			DeletededAt: entity.BaseEntity.DeletedAt,
 		},
-		Name:        entity.Name,
-		FirebaseUid: entity.FirebaseUid,
+		Name: entity.Name,
 	}
 }

@@ -21,20 +21,20 @@ func NewUserRepository(ctx context.Context) *UserRepository {
 	}
 }
 
-func (r *UserRepository) CreateUser(db *gorm.DB, model *model.User) error {
+func (r *UserRepository) CreateUser(db *gorm.DB, model *model.InputUser) error {
 	entity := r.convertModelToEntity(model)
 	return r.store.CreateUser(db, entity)
 }
 
-func (s *UserRepository) FindUserByFirebaseUID(db *gorm.DB, m *model.User) (*model.User, error) {
+func (s *UserRepository) FindUserByFirebaseUID(db *gorm.DB, m *model.InputUser) (*model.OutputUser, error) {
 	entity, err := s.store.FindUserByCondition(db, "firebase_uid", m.FirebaseUid)
 	if err != nil {
 		return nil, err
 	}
-	return model.NewUser(entity), nil
+	return model.NewOutputUser(entity), nil
 }
 
-func (r *UserRepository) convertModelToEntity(m *model.User) *entity.User {
+func (r *UserRepository) convertModelToEntity(m *model.InputUser) *entity.User {
 	return &entity.User{
 		Name:        m.Name,
 		FirebaseUid: m.FirebaseUid,

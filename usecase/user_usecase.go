@@ -20,12 +20,12 @@ func NewUserUsecase(ctx context.Context) *UserUsecase {
 	}
 }
 
-func (u *UserUsecase) CreateUser(model *model.User) error {
+func (u *UserUsecase) CreateUser(model *model.InputUser) error {
 	db := util.GetConn()
 	return u.repository.CreateUser(db, model)
 }
 
-func (u *UserUsecase) FindUserByFirebaseUID(model *model.User) (*model.User, error) {
+func (u *UserUsecase) FindUserByFirebaseUID(model *model.InputUser) (*model.OutputUser, error) {
 	db := util.GetConn()
 	return u.repository.FindUserByFirebaseUID(db, model)
 }

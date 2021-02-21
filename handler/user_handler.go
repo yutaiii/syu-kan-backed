@@ -12,7 +12,7 @@ import (
 
 func CreateUser() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		u := new(*model.User)
+		u := new(*model.InputUser)
 		err := c.Bind(u)
 		if err != nil {
 			log.Printf("CreateUser, Bind err: %+v", err)
@@ -31,7 +31,7 @@ func CreateUser() echo.HandlerFunc {
 
 func FindUserByFirebaseUID() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		u := new(model.User)
+		u := new(model.InputUser)
 		err := c.Bind(u)
 		if err != nil {
 			log.Printf("FindUserByFirebaseUID, Bind err: %+v", err)
