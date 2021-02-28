@@ -13,6 +13,10 @@ type Routine struct {
 	StartedAt time.Time `json:"startedAt"`
 }
 
+// type RoutineForGetInput struct {
+// 	UserID uint64 `json:"userId"`
+// }
+
 func NewRoutine(entity *entity.Routine) *Routine {
 	return &Routine{
 		BaseModel: BaseModel{
