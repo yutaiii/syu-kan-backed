@@ -32,6 +32,7 @@ func main() {
 	e.POST("/progress", handler.CreateProgerss())
 
 	e.POST("/user/create", handler.CreateUser())
+	e.GET("/users/:userId/routines", handler.GetRoutinesByUserId())
 	e.POST("/users/find", handler.FindUserByFirebaseUID())
 
 	//exec server

@@ -31,6 +31,15 @@ func (r *RoutineRepository) GetAllRoutines(db *gorm.DB) ([]*model.Routine, error
 	return models, err
 }
 
+func (r *RoutineRepository) GetByUserId(db *gorm.DB, m *model.RoutineForGetInput) ([]*model.Routine, error) {
+	routines, err := r.store.GetByConditions(db, "user_id = ?", m.UserID)
+	if err != nil {
+		return nil, err
+	}
+	models := model.NewRoutines(routines)
+	return models, err
+}
+
 func (r *RoutineRepository) CreateRoutines(models []*model.Routine, db *gorm.DB) ([]*model.Routine, error) {
 	entities := r.convertModelsToEntity(models)
 	result, err := r.store.CreateRoutines(entities, db)

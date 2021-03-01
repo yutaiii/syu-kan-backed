@@ -31,6 +31,16 @@ func (u *RoutineUsecase) GetAllRoutines() ([]*model.Routine, error) {
 	return routines, nil
 }
 
+func (u *RoutineUsecase) GetByUserId(m *model.RoutineForGetInput) ([]*model.Routine, error) {
+	db := util.GetConn()
+	routines, err := u.repository.GetByUserId(db, m)
+	if err != nil {
+		log.Printf("RoutineUsecase, GetAllRoutines error: %+v", err)
+		return nil, err
+	}
+	return routines, nil
+}
+
 func (u *RoutineUsecase) CreateRoutines(models []*model.Routine) ([]*model.Routine, error) {
 	db := util.GetConn()
 	routines, err := u.repository.CreateRoutines(models, db)

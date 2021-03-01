@@ -27,14 +27,14 @@ func (s *RoutineStore) GetAll(db *gorm.DB) ([]*entity.Routine, error) {
 	return routines, nil
 }
 
-// func (s *RoutineStore) GetByConditions(db *gorm.DB) ([]*entity.Routine, error) {
-// 	routines := make([]*entity.Routine, 0)
-// 	err := db.Find(&routines).Error
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	return routines, nil
-// }
+func (s *RoutineStore) GetByConditions(db *gorm.DB, query string, args ...interface{}) ([]*entity.Routine, error) {
+	routines := make([]*entity.Routine, 0)
+	err := db.Where(query, args).Find(&routines).Error
+	if err != nil {
+		return nil, err
+	}
+	return routines, nil
+}
 
 func (s *RoutineStore) CreateRoutines(e []*entity.Routine, db *gorm.DB) ([]*entity.Routine, error) {
 	err := db.Create(&e).Error

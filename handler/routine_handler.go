@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo"
 	"github.com/yutaiii/syu-kan-backend/domain/model"
@@ -22,19 +23,26 @@ func GetRoutines() echo.HandlerFunc {
 	}
 }
 
-// TODO ここはユーザー単位で処理をするようにする
-// func GetRoutinesByUserId() echo.HandlerFunc {
-// 	return func(c echo.Context) error {
-// 		usecase := usecase.NewRoutineUsecase(context.Background())
-// 		//models := new([]*model.RoutineForGetInput)
-// 		routines, err := usecase.GetAllRoutines()
-// 		if err != nil {
-// 			log.Printf("RoutineAPI, GetAllRoutines error: %+v", err)
-// 			return c.JSON(http.StatusInternalServerError, "error")
-// 		}
-// 		return c.JSON(http.StatusOK, routines)
-// 	}
-// }
+func GetRoutinesByUserId() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		usecase := usecase.NewRoutineUsecase(context.Background())
+		userId := c.Param("userId")
+		var m model.RoutineForGetInput
+		uintUserId, err := strconv.ParseUint(userId, 10, 64)
+		if err != nil {
+			log.Printf("RoutineAPI, strconv.ParseUint error: %+v", err)
+			return c.JSON(http.StatusInternalServerError, "error")
+		}
+
+		m.UserID = uintUserId
+		routines, err := usecase.GetByUserId(&m)
+		if err != nil {
+			log.Printf("RoutineAPI, GetAllRoutines error: %+v", err)
+			return c.JSON(http.StatusInternalServerError, "error")
+		}
+		return c.JSON(http.StatusOK, routines)
+	}
+}
 
 func CreateRoutines() echo.HandlerFunc {
 	return func(c echo.Context) error {
