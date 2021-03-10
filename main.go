@@ -26,7 +26,7 @@ func main() {
 	//routing
 	e.GET("/routines", handler.GetRoutines())
 	e.POST("/routines/create", handler.CreateRoutines())
-	e.PUT("/routines/update", handler.UpdateRoutines())
+	e.PUT("/users/:userId/routines", handler.UpdateRoutines())
 	e.POST("/routines/delete", handler.DeleteRoutines())
 
 	e.POST("/progress", handler.CreateProgerss())

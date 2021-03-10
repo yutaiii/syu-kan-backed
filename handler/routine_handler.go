@@ -66,14 +66,25 @@ func CreateRoutines() echo.HandlerFunc {
 func UpdateRoutines() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		usecase := usecase.NewRoutineUsecase(context.Background())
-		models := new([]*model.Routine)
-		err := c.Bind(models)
+		var models []*model.Routine
+		err := c.Bind(&models)
 		if err != nil {
-			log.Printf("RoutineAPI, UpdateRoutines,Bind error: %+v", err)
+			log.Printf("RoutineAPI, UpdateRoutines, Bind error: %+v", err)
 			return c.JSON(http.StatusBadRequest, "Bad Request")
 		}
 
-		result, err := usecase.UpdateRoutines(*models)
+		// TODO 別メソッドに切り出す
+		userIdStr := c.Param("userId")
+		userId, err := strconv.ParseInt(userIdStr, 10, 64)
+		if err != nil {
+			log.Printf("RoutineAPI, UpdateRoutines, strconv.ParseInt error: %+v", err)
+			return c.JSON(http.StatusInternalServerError, "Internal Server Error")
+		}
+		for i := 0; i < len(models); i++ {
+			models[i].UserID = uint64(userId)
+		}
+
+		result, err := usecase.UpdateRoutines(models)
 		if err != nil {
 			log.Printf("RoutineAPI, UpdateRoutines error: %+v", err)
 			return c.JSON(http.StatusInternalServerError, "Internal Server Error")
