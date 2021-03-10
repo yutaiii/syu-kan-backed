@@ -66,22 +66,11 @@ func CreateRoutines() echo.HandlerFunc {
 func UpdateRoutines() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		usecase := usecase.NewRoutineUsecase(context.Background())
-		var models []*model.Routine
-		err := c.Bind(&models)
-		if err != nil {
-			log.Printf("RoutineAPI, UpdateRoutines, Bind error: %+v", err)
-			return c.JSON(http.StatusBadRequest, "Bad Request")
-		}
 
-		// TODO 別メソッドに切り出す
-		userIdStr := c.Param("userId")
-		userId, err := strconv.ParseInt(userIdStr, 10, 64)
+		models, err := getUpdateRoutinesParam(c)
 		if err != nil {
-			log.Printf("RoutineAPI, UpdateRoutines, strconv.ParseInt error: %+v", err)
-			return c.JSON(http.StatusInternalServerError, "Internal Server Error")
-		}
-		for i := 0; i < len(models); i++ {
-			models[i].UserID = uint64(userId)
+			log.Printf("RoutineAPI, UpdateRoutines, getUpdateRoutinesParam error: %+v", err)
+			return c.JSON(http.StatusBadRequest, "Bad Request")
 		}
 
 		result, err := usecase.UpdateRoutines(models)
@@ -110,4 +99,22 @@ func DeleteRoutines() echo.HandlerFunc {
 		}
 		return c.JSON(http.StatusOK, "OK")
 	}
+}
+
+func getUpdateRoutinesParam(c echo.Context) ([]*model.Routine, error) {
+	var models []*model.Routine
+	err := c.Bind(&models)
+	if err != nil {
+		return nil, err
+	}
+
+	userIdStr := c.Param("userId")
+	userId, err := strconv.ParseInt(userIdStr, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	for i := 0; i < len(models); i++ {
+		models[i].UserID = uint64(userId)
+	}
+	return models, nil
 }
