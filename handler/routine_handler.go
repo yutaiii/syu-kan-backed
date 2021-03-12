@@ -85,14 +85,14 @@ func UpdateRoutines() echo.HandlerFunc {
 func DeleteRoutines() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		usecase := usecase.NewRoutineUsecase(context.Background())
-		models := new([]*model.Routine)
-		err := c.Bind(models)
+
+		models, err := getDeleteRoutinesParam(c)
 		if err != nil {
-			log.Printf("RoutineAPI, DeleteRoutines,Bind error: %+v", err)
+			log.Printf("RoutineAPI, DeleteRoutines, getDeleteRoutinesParam error: %+v", err)
 			return c.JSON(http.StatusBadRequest, "Bad Request")
 		}
 
-		err = usecase.DeleteRoutines(*models)
+		err = usecase.DeleteRoutines(models)
 		if err != nil {
 			log.Printf("RoutineAPI, DeleteRoutines error: %+v", err)
 			return c.JSON(http.StatusInternalServerError, "Internal Server Error")
@@ -102,6 +102,24 @@ func DeleteRoutines() echo.HandlerFunc {
 }
 
 func getUpdateRoutinesParam(c echo.Context) ([]*model.Routine, error) {
+	var models []*model.Routine
+	err := c.Bind(&models)
+	if err != nil {
+		return nil, err
+	}
+
+	userIdStr := c.Param("userId")
+	userId, err := strconv.ParseInt(userIdStr, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	for i := 0; i < len(models); i++ {
+		models[i].UserID = uint64(userId)
+	}
+	return models, nil
+}
+
+func getDeleteRoutinesParam(c echo.Context) ([]*model.Routine, error) {
 	var models []*model.Routine
 	err := c.Bind(&models)
 	if err != nil {
