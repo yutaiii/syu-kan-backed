@@ -23,14 +23,17 @@ func main() {
 		AllowMethods: []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete},
 	}))
 
-	//routing
+	// routines
 	e.GET("/routines", handler.GetRoutines())
 	e.POST("/routines/create", handler.CreateRoutines())
 	e.PUT("/users/:userId/routines", handler.UpdateRoutines())
 	e.DELETE("/users/:userId/routines", handler.DeleteRoutines())
 
+	// progress
 	e.POST("/progress", handler.CreateProgerss())
+	e.GET("/users/:userId/progress/today", handler.GetProgressOfToday())
 
+	// users
 	e.POST("/user/create", handler.CreateUser())
 	e.GET("/users/:userId/routines", handler.GetRoutinesByUserId())
 	e.POST("/users/find", handler.FindUserByFirebaseUID())

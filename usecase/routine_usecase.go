@@ -35,7 +35,7 @@ func (u *RoutineUsecase) GetByUserId(m *model.RoutineForGetInput) ([]*model.Rout
 	db := util.GetConn()
 	routines, err := u.repository.GetByUserId(db, m)
 	if err != nil {
-		log.Printf("RoutineUsecase, GetAllRoutines error: %+v", err)
+		log.Printf("RoutineUsecase, GetByUserId error: %+v", err)
 		return nil, err
 	}
 	return routines, nil

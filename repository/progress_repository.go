@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"log"
 
 	"github.com/yutaiii/syu-kan-backend/domain/entity"
 	"github.com/yutaiii/syu-kan-backend/domain/model"
@@ -20,6 +21,25 @@ func NewProgressRepository(ctx context.Context) *ProgressRepository {
 		ctx:   ctx,
 		store: store.NewProgressStore(ctx),
 	}
+}
+
+func (r *ProgressRepository) GetProgressOfToday(db *gorm.DB, models []*model.Routine) ([]*model.Progress, error) {
+	var argRoutineIds []uint64
+	query := "`routine_id` IN ? AND `date` >= CURDATE() AND `date` < CURDATE() + INTERVAL 1 DAY"
+
+	for i := 0; i < len(models); i++ {
+		argRoutineIds = append(argRoutineIds, models[i].ID)
+	}
+
+	// errorになる argsが配列内配列になっている
+	//progress, err := r.store.GetByConditions(db, query, argRoutineIds)
+	progress, err := r.store.GetByRoutineIds(db, query, argRoutineIds)
+	if err != nil {
+		return nil, err
+	}
+
+	m := model.NewMultiProgress(progress)
+	return m, nil
 }
 
 func (r *ProgressRepository) CreateProgress(db *gorm.DB, models []*model.Progress) error {
