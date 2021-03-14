@@ -2,7 +2,6 @@ package store
 
 import (
 	"context"
-	"log"
 
 	"github.com/yutaiii/syu-kan-backend/domain/entity"
 

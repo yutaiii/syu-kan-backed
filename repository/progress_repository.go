@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"log"
 
 	"github.com/yutaiii/syu-kan-backend/domain/entity"
 	"github.com/yutaiii/syu-kan-backend/domain/model"
