@@ -28,7 +28,7 @@ func (r *RoutineRepository) GetAllRoutines(db *gorm.DB) ([]*model.Routine, error
 		return nil, err
 	}
 	models := model.NewRoutines(routines)
-	return models, err
+	return models, nil
 }
 
 func (r *RoutineRepository) GetByUserId(db *gorm.DB, m *model.RoutineForGetInput) ([]*model.Routine, error) {
@@ -37,7 +37,7 @@ func (r *RoutineRepository) GetByUserId(db *gorm.DB, m *model.RoutineForGetInput
 		return nil, err
 	}
 	models := model.NewRoutines(routines)
-	return models, err
+	return models, nil
 }
 
 func (r *RoutineRepository) CreateRoutines(models []*model.Routine, db *gorm.DB) ([]*model.Routine, error) {
