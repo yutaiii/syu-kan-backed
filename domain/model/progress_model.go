@@ -14,7 +14,10 @@ type Progress struct {
 }
 
 func NewMultiProgress(entities []*entity.Progress) []*Progress {
-	var models []*Progress
+	// フロント側でnullになる
+	//var models []*Progress
+	// フロント側で空の配列になる
+	models := make([]*Progress, 0)
 	for _, e := range entities {
 		model := NewProgress(e)
 		models = append(models, model)
