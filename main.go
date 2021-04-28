@@ -24,7 +24,8 @@ func main() {
 	}))
 
 	// routines
-	e.GET("/routines", handler.GetRoutines())
+	// 使用していないAPIをコメントアウト
+	// e.GET("/routines", handler.GetRoutines())
 	e.POST("/routines/create", handler.CreateRoutines())
 	e.PUT("/users/:userId/routines", handler.UpdateRoutines())
 	e.DELETE("/users/:userId/routines", handler.DeleteRoutines())
